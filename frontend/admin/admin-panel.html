@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Portfolio Martinoh</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Devicon -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;
+  --surface:#111118;
+  --card:#16161f;
+  --border:#2a2a3a;
+  --accent:#00f5a0;
+  --accent2:#00b4d8;
+  --danger:#ff4d6d;
+  --warning:#f4a261;
+  --text:#e8e8f0;
+  --muted:#6b6b80;
+  --input-bg:#0e0e16;
+}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── UTILS ── */
+.hidden{display:none!important}
+.mono{font-family:'Space Mono',monospace}
+
+/* ── LOGIN ── */
+#login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.login-box{width:100%;max-width:400px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2.5rem}
+.login-logo{font-family:'Space Mono',monospace;font-size:.85rem;color:var(--accent);letter-spacing:3px;margin-bottom:2rem;display:flex;align-items:center;gap:.5rem}
+.login-logo::before{content:'▶';font-size:.6rem}
+.login-title{font-size:1.5rem;font-weight:700;margin-bottom:.4rem}
+.login-sub{font-size:.85rem;color:var(--muted);margin-bottom:2rem}
+.field{margin-bottom:1.25rem}
+.field label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:.4rem;letter-spacing:.5px}
+.field input{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:6px;padding:.7rem 1rem;color:var(--text);font-family:'Sora',sans-serif;font-size:.9rem;transition:.2s;outline:none}
+.field input:focus{border-color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.5rem;border-radius:6px;font-size:.875rem;font-weight:600;cursor:pointer;border:none;font-family:'Sora',sans-serif;transition:all .2s}
+.btn-primary{background:var(--accent);color:#0a0a0f;width:100%}
+.btn-primary:hover{background:#00d488}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-danger{background:rgba(255,77,109,.15);color:var(--danger);border:1px solid rgba(255,77,109,.3)}
+.btn-danger:hover{background:rgba(255,77,109,.25)}
+.btn-sm{padding:.4rem .85rem;font-size:.8rem}
+.error-msg{background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.3);border-radius:6px;padding:.65rem 1rem;font-size:.85rem;color:var(--danger);margin-bottom:1rem}
+
+/* ── LAYOUT ADMIN ── */
+#admin-page{display:flex;min-height:100vh}
+
+/* ── SIDEBAR AMÉLIORÉE ── */
+.sidebar {
+  width: 260px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  flex-shrink: 0;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0a0a0f;
+  font-size: 1.2rem;
+}
+
+.brand-info {
+  flex: 1;
+}
+
+.brand-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+
+.brand-role {
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--muted);
+  transition: all 0.2s ease;
+  position: relative;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+}
+
+.nav-item.active {
+  background: rgba(0, 245, 160, 0.08);
+  color: var(--accent);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 24px;
+  background: var(--accent);
+  border-radius: 0 3px 3px 0;
+}
+
+.nav-icon {
+  width: 24px;
+  text-align: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.nav-label {
+  flex: 1;
+}
+
+.nav-badge {
+  background: rgba(0, 245, 160, 0.12);
+  color: var(--accent);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.nav-badge.new {
+  background: #ff4d6d;
+  color: #fff;
+  animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  margin-bottom: 0.75rem;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 245, 160, 0.12);
+  border: 1px solid rgba(0, 245, 160, 0.2);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.user-role {
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255, 77, 109, 0.08);
+  border: 1px solid rgba(255, 77, 109, 0.15);
+  border-radius: 8px;
+  color: var(--danger);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 77, 109, 0.15);
+  transform: translateY(-1px);
+}
+
+.logout-btn i {
+  font-size: 0.85rem;
+}
+
+/* Responsive Sidebar */
+@media(max-width: 768px) {
+  .sidebar {
+    width: 68px;
+    padding: 1rem 0;
+  }
+  
+  .sidebar-brand .brand-info,
+  .nav-label,
+  .nav-badge,
+  .user-details,
+  .logout-btn span {
+    display: none;
+  }
+  
+  .sidebar-brand {
+    justify-content: center;
+    padding: 0 0 1rem;
+  }
+  
+  .brand-logo {
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
+  }
+  
+  .nav-item {
+    justify-content: center;
+    padding: 0.6rem;
+  }
+  
+  .nav-icon {
+    font-size: 1.1rem;
+    width: auto;
+  }
+  
+  .sidebar-footer {
+    padding: 1rem 0.5rem;
+  }
+  
+  .user-info {
+    justify-content: center;
+    padding: 0;
+  }
+  
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.7rem;
+  }
+  
+  .logout-btn {
+    padding: 0.5rem;
+  }
+  
+  .logout-btn i {
+    font-size: 1rem;
+  }
+}
+
+/* MAIN */
+.main{margin-left:240px;flex:1;padding:2rem;min-height:100vh}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem}
+.page-title{font-size:1.5rem;font-weight:700}
+.page-title span{font-size:.85rem;color:var(--muted);font-weight:400;margin-left:.75rem;font-family:'Space Mono',monospace}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
+.stat-label{font-size:.75rem;color:var(--muted);letter-spacing:.5px;margin-bottom:.4rem}
+.stat-val{font-size:2rem;font-weight:700;font-family:'Space Mono',monospace;color:var(--accent)}
+
+/* TABLE */
+.table-box{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.table-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.table-head h3{font-size:1rem;font-weight:600}
+table{width:100%;border-collapse:collapse}
+th{font-size:.75rem;color:var(--muted);text-align:left;padding:.75rem 1.25rem;border-bottom:1px solid var(--border);font-weight:400;letter-spacing:.5px}
+td{padding:.85rem 1.25rem;border-bottom:1px solid rgba(42,42,58,.5);font-size:.875rem;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+.td-actions{display:flex;gap:.5rem}
+.badge{display:inline-flex;align-items:center;padding:.2rem .6rem;border-radius:4px;font-size:.7rem;font-family:'Space Mono',monospace}
+.badge-green{background:rgba(0,245,160,.1);color:var(--accent);border:1px solid rgba(0,245,160,.2)}
+.badge-blue{background:rgba(0,180,216,.1);color:var(--accent2);border:1px solid rgba(0,180,216,.2)}
+.badge-gray{background:rgba(107,107,128,.1);color:var(--muted);border:1px solid rgba(107,107,128,.2)}
+.pill-list{display:flex;flex-wrap:wrap;gap:.3rem}
+.pill{background:rgba(255,255,255,.06);color:var(--muted);font-size:.68rem;padding:.15rem .5rem;border-radius:3px}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:12px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto}
+.modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-size:1.05rem;font-weight:600}
+.modal-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.25rem;line-height:1;padding:.2rem}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:1.5rem}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;justify-content:flex-end}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.field textarea{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:6px;padding:.7rem 1rem;color:var(--text);font-family:'Sora',sans-serif;font-size:.875rem;resize:vertical;min-height:90px;transition:.2s;outline:none}
+.field textarea:focus{border-color:var(--accent)}
+.field select{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:6px;padding:.7rem 1rem;color:var(--text);font-family:'Sora',sans-serif;font-size:.875rem;outline:none}
+.checkbox-row{display:flex;align-items:center;gap:.65rem;margin-top:.5rem}
+.checkbox-row input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px}
+.checkbox-row label{font-size:.875rem;color:var(--text);cursor:pointer}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.85rem 1.25rem;font-size:.875rem;z-index:999;display:flex;align-items:center;gap:.65rem;box-shadow:0 4px 20px rgba(0,0,0,.4);transform:translateY(80px);opacity:0;transition:.3s ease}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:rgba(0,245,160,.4)}
+.toast.error{border-color:rgba(255,77,109,.4)}
+
+/* EMPTY STATE */
+.empty-state{padding:3rem;text-align:center;color:var(--muted)}
+.empty-state .empty-icon{font-size:2.5rem;margin-bottom:.75rem;opacity:.4}
+.empty-state p{font-size:.9rem}
+
+/* LOADING */
+.loading-row td{text-align:center;padding:2rem;color:var(--muted);font-size:.875rem}
+
+@media(max-width:768px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .stats-row{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ PAGE LOGIN ══════════════════ -->
+<div id="login-page">
+  <div class="login-box">
+    <div class="login-logo">MRT_ADMIN</div>
+    <h1 class="login-title">Espace Admin</h1>
+    <p class="login-sub">Connectez-vous pour gérer votre portfolio</p>
+    <div id="login-error" class="error-msg hidden"></div>
+    <div class="field">
+      <label>IDENTIFIANT</label>
+      <input type="text" id="inp-user" placeholder="martinoh" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>MOT DE PASSE</label>
+      <input type="password" id="inp-pass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary" id="btn-login" onclick="doLogin()">Se connecter →</button>
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE ADMIN ══════════════════ -->
+<div id="admin-page" class="hidden">
+
+  <!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-logo">
+      <i class="fa-solid fa-cube"></i>
+    </div>
+    <div class="brand-info">
+      <div class="brand-name">MRT_ADMIN</div>
+      <div class="brand-role">Panel de gestion</div>
+    </div>
+  </div>
+  
+  <nav class="sidebar-nav">
+    <div class="nav-item active" onclick="showTab('dashboard')" id="nav-dashboard">
+      <span class="nav-icon"><i class="fa-solid fa-gauge-high"></i></span>
+      <span class="nav-label">Tableau de bord</span>
+      <!-- <span class="nav-badge">3</span> -->
+    </div>
+    
+    <div class="nav-item" onclick="showTab('projects')" id="nav-projects">
+      <span class="nav-icon"><i class="fa-solid fa-code"></i></span>
+      <span class="nav-label">Projets</span>
+      <!-- <span class="nav-badge">12</span> -->
+    </div>
+    
+    <div class="nav-item" onclick="showTab('experiences')" id="nav-experiences">
+      <span class="nav-icon"><i class="fa-solid fa-briefcase"></i></span>
+      <span class="nav-label">Expériences</span>
+    </div>
+    
+    <div class="nav-item" onclick="showTab('formation')" id="nav-formation">
+      <span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+      <span class="nav-label">Formation</span>
+    </div>
+    
+    <!-- <div class="nav-item" onclick="showTab('messages')" id="nav-messages">
+      <span class="nav-icon"><i class="fa-solid fa-envelope"></i></span>
+      <span class="nav-label">Messages</span>
+      <span class="nav-badge new">5</span>
+    </div> -->
+    
+    <div class="nav-item" onclick="showTab('settings')" id="nav-settings">
+      <span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+      <span class="nav-label">Paramètres</span>
+    </div>
+  </nav>
+  
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <div class="user-details">
+        <div class="user-name">Martinoh</div>
+        <div class="user-role">Administrateur</div>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
+    </button>
+  </div>
+</aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <div id="tab-dashboard">
+      <div class="page-header">
+        <h2 class="page-title">Tableau de bord <span id="dash-date"></span></h2>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">PROJETS</div>
+          <div class="stat-val" id="stat-projects">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">EXPÉRIENCES</div>
+          <div class="stat-val" id="stat-exp">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">FORMATIONS</div>
+          <div class="stat-val" id="stat-form">—</div>
+        </div>
+      </div>
+      <div class="table-box">
+        <div class="table-head"><h3>Aperçu — Projets récents</h3></div>
+        <table>
+          <thead><tr><th>TITRE</th><th>STACK</th><th>DATE</th><th>STATUT</th></tr></thead>
+          <tbody id="dash-projects-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PROJETS -->
+    <div id="tab-projects" class="hidden">
+      <div class="page-header">
+        <h2 class="page-title">Projets <span id="count-projects"></span></h2>
+        <button class="btn btn-primary btn-sm" onclick="openModal('project')">+ Ajouter un projet</button>
+      </div>
+      <div class="table-box">
+        <table>
+          <thead><tr><th>TITRE</th><th>STACK</th><th>LIENS</th><th>MIS EN AVANT</th><th>ACTIONS</th></tr></thead>
+          <tbody id="projects-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EXPÉRIENCES -->
+    <div id="tab-experiences" class="hidden">
+      <div class="page-header">
+        <h2 class="page-title">Expériences <span id="count-exp"></span></h2>
+        <button class="btn btn-primary btn-sm" onclick="openModal('experience')">+ Ajouter</button>
+      </div>
+      <div class="table-box">
+        <table>
+          <thead><tr><th>POSTE</th><th>ENTREPRISE</th><th>PÉRIODE</th><th>COMPÉTENCES</th><th>ACTIONS</th></tr></thead>
+          <tbody id="exp-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FORMATION -->
+    <div id="tab-formation" class="hidden">
+      <div class="page-header">
+        <h2 class="page-title">Formation <span id="count-form"></span></h2>
+        <button class="btn btn-primary btn-sm" onclick="openModal('formation')">+ Ajouter</button>
+      </div>
+      <div class="table-box">
+        <table>
+          <thead><tr><th>DIPLÔME</th><th>ÉTABLISSEMENT</th><th>PÉRIODE</th><th>STATUT</th><th>ACTIONS</th></tr></thead>
+          <tbody id="form-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PARAMÈTRES -->
+    <div id="tab-settings" class="hidden">
+      <div class="page-header">
+        <h2 class="page-title">Paramètres <span>Identifiants admin</span></h2>
+      </div>
+
+      <div style="max-width:480px">
+        <div class="table-box" style="padding:1.75rem">
+          <div style="margin-bottom:1.5rem">
+            <div style="font-size:.75rem;color:var(--muted);letter-spacing:.5px;margin-bottom:.35rem">IDENTIFIANT ACTUEL</div>
+            <div id="current-username-display" style="font-family:'Space Mono',monospace;font-size:1rem;color:var(--accent)">—</div>
+          </div>
+
+          <hr style="border:none;border-top:1px solid var(--border);margin-bottom:1.5rem">
+
+          <div id="settings-error" class="error-msg hidden"></div>
+          <div id="settings-success" style="background:rgba(0,245,160,.1);border:1px solid rgba(0,245,160,.3);border-radius:6px;padding:.65rem 1rem;font-size:.85rem;color:var(--accent);margin-bottom:1rem" class="hidden"></div>
+
+          <div class="field">
+            <label>MOT DE PASSE ACTUEL *</label>
+            <input type="password" id="set-current-pass" placeholder="Votre mot de passe actuel">
+          </div>
+
+          <hr style="border:none;border-top:1px solid var(--border);margin:1.25rem 0">
+          <div style="font-size:.8rem;color:var(--muted);margin-bottom:1.1rem;letter-spacing:.3px">Laissez vide les champs que vous ne voulez pas changer</div>
+
+          <div class="field">
+            <label>NOUVEL IDENTIFIANT</label>
+            <input type="text" id="set-new-user" placeholder="Ex: martinoh_admin">
+          </div>
+          <div class="field">
+            <label>NOUVEAU MOT DE PASSE</label>
+            <input type="password" id="set-new-pass" placeholder="Min. 8 caractères">
+          </div>
+          <div class="field">
+            <label>CONFIRMER NOUVEAU MOT DE PASSE</label>
+            <input type="password" id="set-confirm-pass" placeholder="Répétez le nouveau mot de passe">
+          </div>
+
+          <button class="btn btn-primary" style="width:auto;margin-top:.5rem" onclick="saveCredentials()">
+            Enregistrer les changements
+          </button>
+        </div>
+
+        <div style="margin-top:1rem;padding:.85rem 1rem;background:rgba(244,162,97,.08);border:1px solid rgba(244,162,97,.2);border-radius:8px;font-size:.8rem;color:var(--warning);line-height:1.7">
+          ⚠ Après avoir changé vos identifiants, vous serez déconnecté automatiquement et devrez vous reconnecter avec les nouveaux.
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ══════════════════ MODALS ══════════════════ -->
+
+<<!-- Modal Projet -->
+<div id="modal-project" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-project-title">Ajouter un projet</h3>
+      <button class="modal-close" onclick="closeModal('project')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="project-id">
+      <div class="field">
+        <label>TITRE *</label>
+        <input type="text" id="project-title" placeholder="Ex: Application e-commerce">
+      </div>
+      <div class="field">
+        <label>DESCRIPTION *</label>
+        <textarea id="project-desc" placeholder="Décrivez le projet en 2-3 phrases..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>ICÔNE (emoji — si pas de photo)</label>
+          <input type="text" id="project-thumb" placeholder="💻">
+        </div>
+        <div class="field">
+          <label>STACK (séparé par virgule)</label>
+          <input type="text" id="project-stack" placeholder="React, Laravel, MySQL">
+        </div>
+      </div>
+      <div class="field">
+        <label>IMAGES DU PROJET (sélectionnez plusieurs)</label>
+        <input type="file" id="project-images" accept="image/*" multiple style="background:var(--input-bg);border:1px solid var(--border);border-radius:6px;padding:.5rem .75rem;color:var(--text);width:100%;font-family:var(--body);font-size:.85rem">
+        <div id="project-images-preview" style="margin-top:.75rem;display:flex;flex-wrap:wrap;gap:.5rem"></div>
+        <div id="project-existing-images" style="margin-top:.5rem;display:flex;flex-wrap:wrap;gap:.5rem"></div>
+      </div>
+      <div class="field">
+        <label>CLIENT / CONTEXTE</label>
+        <input type="text" id="project-client" placeholder="Ex: INSTAT, Projet académique">
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>LIEN GITHUB</label>
+          <input type="text" id="project-github" placeholder="https://github.com/...">
+        </div>
+        <div class="field">
+          <label>LIEN LIVE</label>
+          <input type="text" id="project-live" placeholder="https://...">
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="project-featured">
+        <label for="project-featured">Mettre en avant ce projet</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('project')">Annuler</button>
+      <button class="btn btn-primary btn-sm" onclick="saveProject()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Expérience -->
+<div id="modal-experience" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-exp-title">Ajouter une expérience</h3>
+      <button class="modal-close" onclick="closeModal('experience')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="exp-id">
+      <div class="form-row">
+        <div class="field">
+          <label>POSTE *</label>
+          <input type="text" id="exp-poste" placeholder="Ex: Développeur Fullstack">
+        </div>
+        <div class="field">
+          <label>ENTREPRISE *</label>
+          <input type="text" id="exp-entreprise" placeholder="Ex: TechCorp">
+        </div>
+      </div>
+      <div class="field">
+        <label>LIEU</label>
+        <input type="text" id="exp-lieu" placeholder="Ex: Fianarantsoa, Madagascar">
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>DATE DÉBUT</label>
+          <input type="text" id="exp-debut" placeholder="Ex: 2024-01">
+        </div>
+        <div class="field">
+          <label>DATE FIN</label>
+          <input type="text" id="exp-fin" placeholder="Ex: 2025-06 (vide si en cours)">
+        </div>
+      </div>
+      <div class="checkbox-row" style="margin-bottom:1rem">
+        <input type="checkbox" id="exp-encours">
+        <label for="exp-encours">Poste actuel (en cours)</label>
+      </div>
+      <div class="field">
+        <label>DESCRIPTION</label>
+        <textarea id="exp-desc" placeholder="Vos missions et réalisations..."></textarea>
+      </div>
+      <div class="field">
+        <label>COMPÉTENCES (séparé par virgule)</label>
+        <input type="text" id="exp-competences" placeholder="Laravel, Vue.js, Docker">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('experience')">Annuler</button>
+      <button class="btn btn-primary btn-sm" onclick="saveExperience()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Formation -->
+<div id="modal-formation" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-form-title">Ajouter une formation</h3>
+      <button class="modal-close" onclick="closeModal('formation')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="form-id">
+      <div class="field">
+        <label>DIPLÔME *</label>
+        <input type="text" id="form-diplome" placeholder="Ex: Licence Professionnelle en Informatique">
+      </div>
+      <div class="field">
+        <label>ÉTABLISSEMENT *</label>
+        <input type="text" id="form-etab" placeholder="Ex: ENI Fianarantsoa">
+      </div>
+      <div class="field">
+        <label>LIEU</label>
+        <input type="text" id="form-lieu" placeholder="Ex: Fianarantsoa, Madagascar">
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>DATE DÉBUT</label>
+          <input type="text" id="form-debut" placeholder="Ex: 2021">
+        </div>
+        <div class="field">
+          <label>DATE FIN / MENTION</label>
+          <input type="text" id="form-fin" placeholder="Ex: 2024 ou Décembre 2024">
+        </div>
+      </div>
+      <div class="checkbox-row" style="margin-bottom:1rem">
+        <input type="checkbox" id="form-encours">
+        <label for="form-encours">Formation en cours</label>
+      </div>
+      <div class="field">
+        <label>DESCRIPTION</label>
+        <textarea id="form-desc" placeholder="Contenu de la formation..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('formation')">Annuler</button>
+      <button class="btn btn-primary btn-sm" onclick="saveFormation()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  CONFIGURATION — changez cette URL quand vous
+//  déployez le backend en ligne
+// ══════════════════════════════════════════════
+const API = 'http://localhost:5000/api';
+
+let token = localStorage.getItem('admin_token') || null;
+
+// ──── AUTH ────────────────────────────────────
+
+async function doLogin() {
+  const username = document.getElementById('inp-user').value.trim();
+  const password = document.getElementById('inp-pass').value;
+  const btn = document.getElementById('btn-login');
+  const errEl = document.getElementById('login-error');
+
+  if (!username || !password) {
+    showError(errEl, 'Remplissez tous les champs.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Connexion…';
+  errEl.classList.add('hidden');
+
+  try {
+    const res = await fetch(`${API}/auth/login`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({username, password})
+    });
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.message || 'Erreur');
+
+    token = data.token;
+    localStorage.setItem('admin_token', token);
+    enterAdmin();
+  } catch(e) {
+    showError(errEl, e.message || 'Identifiants incorrects.');
+    btn.disabled = false;
+    btn.textContent = 'Se connecter →';
+  }
+}
+
+function doLogout() {
+  token = null;
+  localStorage.removeItem('admin_token');
+  document.getElementById('admin-page').classList.add('hidden');
+  document.getElementById('login-page').classList.remove('hidden');
+  document.getElementById('inp-pass').value = '';
+}
+
+async function enterAdmin() {
+  document.getElementById('login-page').classList.add('hidden');
+  document.getElementById('admin-page').classList.remove('hidden');
+  const now = new Date();
+  document.getElementById('dash-date').textContent =
+    now.toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long'});
+  await loadAll();
+  showTab('dashboard');
+}
+
+// ──── API HELPERS ─────────────────────────────
+
+async function apiFetch(endpoint, method='GET', body=null) {
+  const opts = {
+    method,
+    headers: {
+      'Content-Type':'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(`${API}${endpoint}`, opts);
+  const data = await res.json();
+  if (res.status === 401 || res.status === 403) { doLogout(); return null; }
+  return data;
+}
+
+// ──── DATA ────────────────────────────────────
+
+let projects = [], experiences = [], formation = [];
+
+async function loadAll() {
+  const [p, e, f] = await Promise.all([
+    apiFetch('/projects'),
+    apiFetch('/experiences'),
+    apiFetch('/formation')
+  ]);
+  projects    = p?.data || [];
+  experiences = e?.data || [];
+  formation   = f?.data || [];
+  renderAll();
+}
+
+function renderAll() {
+  renderDashboard();
+  renderProjects();
+  renderExperiences();
+  renderFormation();
+}
+
+// ──── DASHBOARD ───────────────────────────────
+
+function renderDashboard() {
+  document.getElementById('stat-projects').textContent = projects.length;
+  document.getElementById('stat-exp').textContent = experiences.length;
+  document.getElementById('stat-form').textContent = formation.length;
+
+  const tbody = document.getElementById('dash-projects-body');
+  if (!projects.length) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--muted)">Aucun projet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = projects.slice(0,5).map(p => `
+    <tr>
+      <td>${p.thumb || '💻'} <strong>${esc(p.title)}</strong></td>
+      <td><div class="pill-list">${(p.stack||[]).map(s=>`<span class="pill">${esc(s)}</span>`).join('')}</div></td>
+      <td style="color:var(--muted);font-size:.8rem">${p.createdAt || '—'}</td>
+      <td>${p.featured ? '<span class="badge badge-green">Mis en avant</span>' : '<span class="badge badge-gray">Normal</span>'}</td>
+    </tr>`).join('');
+}
+
+// ──── PROJETS ─────────────────────────────────
+
+function renderProjects() {
+  document.getElementById('count-projects').textContent = `(${projects.length})`;
+  const tbody = document.getElementById('projects-body');
+  if (!projects.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2.5rem;color:var(--muted)">Aucun projet. Ajoutez-en un !</td></tr>';
+    return;
+  }
+  tbody.innerHTML = projects.map(p => `
+    <tr>
+      <td>${p.thumb||'💻'} <strong>${esc(p.title)}</strong><br><small style="color:var(--muted)">${esc(p.description).substring(0,60)}…</small></td>
+      <td><div class="pill-list">${(p.stack||[]).map(s=>`<span class="pill">${esc(s)}</span>`).join('')}</div></td>
+      <td style="font-size:.8rem">
+        ${p.github ? `<a href="${p.github}" target="_blank" style="color:var(--accent2)">GitHub</a>` : '—'}
+        ${p.live ? ` · <a href="${p.live}" target="_blank" style="color:var(--accent)">Live</a>` : ''}
+      </td>
+      <td>${p.featured ? '<span class="badge badge-green">✓ Oui</span>' : '<span class="badge badge-gray">Non</span>'}</td>
+      <td><div class="td-actions">
+        <button class="btn btn-outline btn-sm" onclick="editProject(${p.id})">✏ Modifier</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteProject(${p.id})">✕</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function openModal(type, data = null) {
+  if (type === 'project') {
+    document.getElementById('modal-project-title').textContent = data ? 'Modifier le projet' : 'Ajouter un projet';
+    document.getElementById('project-id').value = data?.id || '';
+    document.getElementById('project-title').value = data?.title || '';
+    document.getElementById('project-desc').value = data?.description || '';
+    document.getElementById('project-thumb').value = data?.thumb || '💻';
+    document.getElementById('project-stack').value = (data?.stack || []).join(', ');
+    document.getElementById('project-github').value = data?.github || '';
+    document.getElementById('project-live').value = data?.live || '';
+    document.getElementById('project-featured').checked = data?.featured || false;
+    document.getElementById('project-client').value = data?.client || '';
+    
+    // Afficher les images existantes
+    const existingContainer = document.getElementById('project-existing-images');
+    existingContainer.innerHTML = '';
+    if (data?.images && data.images.length > 0) {
+      data.images.forEach(img => {
+        const imgEl = document.createElement('img');
+        imgEl.src = img;
+        imgEl.style.maxHeight = '80px';
+        imgEl.style.borderRadius = '4px';
+        imgEl.style.border = '1px solid var(--border)';
+        existingContainer.appendChild(imgEl);
+      });
+    }
+    
+    // Reset preview
+    document.getElementById('project-images').value = '';
+    document.getElementById('project-images-preview').innerHTML = '';
+  } else if (type === 'experience') {
+    document.getElementById('modal-exp-title').textContent = data ? 'Modifier' : 'Ajouter une expérience';
+    document.getElementById('exp-id').value = data?.id || '';
+    document.getElementById('exp-poste').value = data?.poste || '';
+    document.getElementById('exp-entreprise').value = data?.entreprise || '';
+    document.getElementById('exp-lieu').value = data?.lieu || '';
+    document.getElementById('exp-debut').value = data?.dateDebut || '';
+    document.getElementById('exp-fin').value = data?.dateFin || '';
+    document.getElementById('exp-encours').checked = data?.enCours || false;
+    document.getElementById('exp-desc').value = data?.description || '';
+    document.getElementById('exp-competences').value = (data?.competences || []).join(', ');
+  } else if (type === 'formation') {
+    document.getElementById('modal-form-title').textContent = data ? 'Modifier' : 'Ajouter une formation';
+    document.getElementById('form-id').value = data?.id || '';
+    document.getElementById('form-diplome').value = data?.diplome || '';
+    document.getElementById('form-etab').value = data?.etablissement || '';
+    document.getElementById('form-lieu').value = data?.lieu || '';
+    document.getElementById('form-debut').value = data?.dateDebut || '';
+    document.getElementById('form-fin').value = data?.dateFin || data?.mention || '';
+    document.getElementById('form-encours').checked = data?.enCours || false;
+    document.getElementById('form-desc').value = data?.description || '';
+  }
+  document.getElementById(`modal-${type}`).classList.remove('hidden');
+}
+function closeModal(type) {
+  document.getElementById(`modal-${type}`).classList.add('hidden');
+}
+
+function editProject(id) {
+  const p = projects.find(x => x.id === id);
+  if (p) openModal('project', p);
+}
+
+async function saveProject() {
+  const id = document.getElementById('project-id').value;
+  const title = document.getElementById('project-title').value.trim();
+  const description = document.getElementById('project-desc').value.trim();
+  if (!title || !description) { showToast('Titre et description requis', 'error'); return; }
+
+  const formData = new FormData();
+  formData.append('title', title);
+  formData.append('description', description);
+  formData.append('thumb', document.getElementById('project-thumb').value.trim() || '💻');
+  formData.append('stack', document.getElementById('project-stack').value.trim());
+  formData.append('github', document.getElementById('project-github').value.trim());
+  formData.append('live', document.getElementById('project-live').value.trim());
+  formData.append('featured', document.getElementById('project-featured').checked);
+  formData.append('client', document.getElementById('project-client').value.trim());
+  
+  // Ajouter toutes les images sélectionnées
+  const imgFiles = document.getElementById('project-images').files;
+  for (let i = 0; i < imgFiles.length; i++) {
+    formData.append('images', imgFiles[i]);
+  }
+
+  const url = id ? `${API}/projects/${id}` : `${API}/projects`;
+  const method = id ? 'PUT' : 'POST';
+  
+  const res = await fetch(url, {
+    method,
+    headers: { 'Authorization': `Bearer ${token}` },
+    body: formData
+  });
+  const data = await res.json();
+
+  if (data?.success) {
+    showToast(id ? 'Projet mis à jour !' : 'Projet ajouté !', 'success');
+    closeModal('project');
+    await loadAll();
+  } else {
+    showToast(data?.message || 'Erreur', 'error');
+  }
+}
+
+async function deleteProject(id) {
+  if (!confirm('Supprimer ce projet ?')) return;
+  const res = await apiFetch(`/projects/${id}`, 'DELETE');
+  if (res?.success) { showToast('Projet supprimé.', 'success'); await loadAll(); }
+}
+
+// ──── EXPÉRIENCES ─────────────────────────────
+
+function renderExperiences() {
+  document.getElementById('count-exp').textContent = `(${experiences.length})`;
+  const tbody = document.getElementById('exp-body');
+  if (!experiences.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2.5rem;color:var(--muted)">Aucune expérience.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = experiences.map(e => `
+    <tr>
+      <td><strong>${esc(e.poste)}</strong></td>
+      <td>${esc(e.entreprise)}<br><small style="color:var(--muted)">${esc(e.lieu||'')}</small></td>
+      <td style="font-size:.8rem;color:var(--muted)">${e.dateDebut||'?'} → ${e.enCours ? '<span style="color:var(--accent)">Présent</span>' : (e.dateFin||'?')}</td>
+      <td><div class="pill-list">${(e.competences||[]).map(c=>`<span class="pill">${esc(c)}</span>`).join('')}</div></td>
+      <td><div class="td-actions">
+        <button class="btn btn-outline btn-sm" onclick="editExp(${e.id})">✏ Modifier</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteExp(${e.id})">✕</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function editExp(id) {
+  const e = experiences.find(x => x.id === id);
+  if (e) openModal('experience', e);
+}
+
+async function saveExperience() {
+  const id = document.getElementById('exp-id').value;
+  const body = {
+    poste:       document.getElementById('exp-poste').value.trim(),
+    entreprise:  document.getElementById('exp-entreprise').value.trim(),
+    lieu:        document.getElementById('exp-lieu').value.trim(),
+    dateDebut:   document.getElementById('exp-debut').value.trim(),
+    dateFin:     document.getElementById('exp-fin').value.trim() || null,
+    enCours:     document.getElementById('exp-encours').checked,
+    description: document.getElementById('exp-desc').value.trim(),
+    competences: document.getElementById('exp-competences').value.split(',').map(s=>s.trim()).filter(Boolean)
+  };
+  if (!body.poste || !body.entreprise) { showToast('Poste et entreprise requis', 'error'); return; }
+
+  const res = id
+    ? await apiFetch(`/experiences/${id}`, 'PUT', body)
+    : await apiFetch('/experiences', 'POST', body);
+
+  if (res?.success) {
+    showToast(id ? 'Expérience mise à jour !' : 'Expérience ajoutée !', 'success');
+    closeModal('experience');
+    await loadAll();
+  } else showToast(res?.message || 'Erreur', 'error');
+}
+
+async function deleteExp(id) {
+  if (!confirm('Supprimer cette expérience ?')) return;
+  const res = await apiFetch(`/experiences/${id}`, 'DELETE');
+  if (res?.success) { showToast('Expérience supprimée.', 'success'); await loadAll(); }
+}
+
+// ──── FORMATION ───────────────────────────────
+
+function renderFormation() {
+  document.getElementById('count-form').textContent = `(${formation.length})`;
+  const tbody = document.getElementById('form-body');
+  if (!formation.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2.5rem;color:var(--muted)">Aucune formation.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = formation.map(f => `
+    <tr>
+      <td><strong>${esc(f.diplome)}</strong></td>
+      <td>${esc(f.etablissement)}<br><small style="color:var(--muted)">${esc(f.lieu||'')}</small></td>
+      <td style="font-size:.8rem;color:var(--muted)">${f.dateDebut||'?'} → ${f.enCours ? '<span style="color:var(--accent)">En cours</span>' : (f.dateFin||f.mention||'?')}</td>
+      <td>${f.enCours ? '<span class="badge badge-green">En cours</span>' : '<span class="badge badge-blue">Terminé</span>'}</td>
+      <td><div class="td-actions">
+        <button class="btn btn-outline btn-sm" onclick="editFormation(${f.id})">✏ Modifier</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteFormation(${f.id})">✕</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function editFormation(id) {
+  const f = formation.find(x => x.id === id);
+  if (f) openModal('formation', f);
+}
+
+async function saveFormation() {
+  const id = document.getElementById('form-id').value;
+  const finVal = document.getElementById('form-fin').value.trim();
+  const body = {
+    diplome:        document.getElementById('form-diplome').value.trim(),
+    etablissement:  document.getElementById('form-etab').value.trim(),
+    lieu:           document.getElementById('form-lieu').value.trim(),
+    dateDebut:      document.getElementById('form-debut').value.trim(),
+    dateFin:        finVal || null,
+    mention:        finVal || '',
+    enCours:        document.getElementById('form-encours').checked,
+    description:    document.getElementById('form-desc').value.trim()
+  };
+  if (!body.diplome || !body.etablissement) { showToast('Diplôme et établissement requis', 'error'); return; }
+
+  const res = id
+    ? await apiFetch(`/formation/${id}`, 'PUT', body)
+    : await apiFetch('/formation', 'POST', body);
+
+  if (res?.success) {
+    showToast(id ? 'Formation mise à jour !' : 'Formation ajoutée !', 'success');
+    closeModal('formation');
+    await loadAll();
+  } else showToast(res?.message || 'Erreur', 'error');
+}
+
+async function deleteFormation(id) {
+  if (!confirm('Supprimer cette formation ?')) return;
+  const res = await apiFetch(`/formation/${id}`, 'DELETE');
+  if (res?.success) { showToast('Formation supprimée.', 'success'); await loadAll(); }
+}
+
+// ──── UI HELPERS ──────────────────────────────
+
+function showTab(name) {
+  ['dashboard','projects','experiences','formation','settings'].forEach(t => {
+    document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== name);
+    document.getElementById(`nav-${t}`).classList.toggle('active', t === name);
+  });
+  if (name === 'settings') loadCurrentUsername();
+}
+
+function showError(el, msg) {
+  el.textContent = msg;
+  el.classList.remove('hidden');
+}
+
+let toastTimer;
+function showToast(msg, type='success') {
+  const el = document.getElementById('toast');
+  el.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
+  el.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+function esc(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Preview des images sélectionnées
+document.getElementById('project-images').addEventListener('change', function() {
+  const files = this.files;
+  const preview = document.getElementById('project-images-preview');
+  preview.innerHTML = '';
+  for (let i = 0; i < files.length; i++) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.maxHeight = '80px';
+      img.style.borderRadius = '4px';
+      img.style.border = '1px solid var(--border)';
+      img.style.margin = '4px';
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(files[i]);
+  }
+});
+
+
+// Fermer modal en cliquant dehors
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) {
+      const type = overlay.id.replace('modal-', '');
+      closeModal(type);
+    }
+  });
+});
+
+
+// ──── PARAMÈTRES ──────────────────────────────
+
+async function loadCurrentUsername() {
+  const res = await apiFetch('/auth/verify');
+  if (res?.currentUsername) {
+    document.getElementById('current-username-display').textContent = res.currentUsername;
+  }
+}
+
+async function saveCredentials() {
+  const currentPassword = document.getElementById('set-current-pass').value;
+  const newUsername     = document.getElementById('set-new-user').value.trim();
+  const newPassword     = document.getElementById('set-new-pass').value;
+  const confirmPassword = document.getElementById('set-confirm-pass').value;
+
+  const errEl = document.getElementById('settings-error');
+  const okEl  = document.getElementById('settings-success');
+  errEl.classList.add('hidden');
+  okEl.classList.add('hidden');
+
+  if (!currentPassword) {
+    errEl.textContent = 'Entrez votre mot de passe actuel.';
+    errEl.classList.remove('hidden'); return;
+  }
+  if (!newUsername && !newPassword) {
+    errEl.textContent = 'Remplissez au moins un champ à modifier.';
+    errEl.classList.remove('hidden'); return;
+  }
+  if (newPassword && newPassword.length < 6) {
+    errEl.textContent = 'Le nouveau mot de passe doit faire au moins 6 caractères.';
+    errEl.classList.remove('hidden'); return;
+  }
+  if (newPassword && newPassword !== confirmPassword) {
+    errEl.textContent = 'Les deux mots de passe ne correspondent pas.';
+    errEl.classList.remove('hidden'); return;
+  }
+
+  const res = await apiFetch('/auth/credentials', 'PUT', {
+    currentPassword,
+    newUsername: newUsername || undefined,
+    newPassword: newPassword || undefined
+  });
+
+  if (res?.success) {
+    okEl.textContent = '✅ ' + res.message;
+    okEl.classList.remove('hidden');
+    // Vider les champs
+    document.getElementById('set-current-pass').value = '';
+    document.getElementById('set-new-user').value = '';
+    document.getElementById('set-new-pass').value = '';
+    document.getElementById('set-confirm-pass').value = '';
+    // Déconnexion automatique après 2 secondes
+    setTimeout(() => doLogout(), 2000);
+  } else {
+    errEl.textContent = res?.message || 'Erreur.';
+    errEl.classList.remove('hidden');
+  }
+}
+
+
+document.getElementById('inp-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+// Auto-login si token encore valide
+(async () => {
+  if (token) {
+    try {
+      const res = await fetch(`${API}/auth/verify`, {
+        headers:{'Authorization':`Bearer ${token}`}
+      });
+      if (res.ok) { enterAdmin(); return; }
+    } catch(e) {}
+    localStorage.removeItem('admin_token');
+    token = null;
+  }
+})();
+</script>
+</body>
+</html>

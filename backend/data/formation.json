@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "diplome": "Master Professionnel en Informatique (Ingénieur) — 2ème année",
+    "etablissement": "ENI — École Nationale d'Informatique",
+    "lieu": "Fianarantsoa, Madagascar",
+    "dateDebut": "2025",
+    "dateFin": null,
+    "enCours": true,
+    "mention": "",
+    "description": "Formation d'ingénieur en informatique avec spécialisation en développement logiciel et architecture système."
+  },
+  {
+    "id": 2,
+    "diplome": "Master Professionnel en Informatique — 1ère année",
+    "etablissement": "ENI — École Nationale d'Informatique",
+    "lieu": "Fianarantsoa, Madagascar",
+    "dateDebut": "2024",
+    "dateFin": "2025",
+    "enCours": false,
+    "mention": "",
+    "description": "Approfondissement des architectures logicielles, bases de données avancées et méthodologies Agile."
+  },
+  {
+    "id": 3,
+    "diplome": "Licence Professionnelle en Informatique — 3ème année",
+    "etablissement": "ENI — École Nationale d'Informatique",
+    "lieu": "Fianarantsoa, Madagascar",
+    "dateDebut": "2023",
+    "dateFin": "2024",
+    "enCours": false,
+    "mention": "Décembre 2024",
+    "description": "Développement web avancé, gestion de projets et conception de systèmes d'information."
+  },
+  {
+    "id": 4,
+    "diplome": "Licence Professionnelle en Informatique — 2ème année",
+    "etablissement": "ENI — École Nationale d'Informatique",
+    "lieu": "Fianarantsoa, Madagascar",
+    "dateDebut": "2022",
+    "dateFin": "2023",
+    "enCours": false,
+    "mention": "",
+    "description": "Algorithmique avancée, bases de données relationnelles et développement d'applications web."
+  },
+  {
+    "id": 5,
+    "diplome": "Licence Professionnelle en Informatique — 1ère année",
+    "etablissement": "ENI — École Nationale d'Informatique",
+    "lieu": "Fianarantsoa, Madagascar",
+    "dateDebut": "2021",
+    "dateFin": "2022",
+    "enCours": false,
+    "mention": "",
+    "description": "Fondamentaux de l'informatique, programmation, réseaux et systèmes d'exploitation."
+  }
+]

@@ -1,0 +1,135 @@
+[
+  {
+    "id": 1,
+    "title": "Plateforme de recrutement",
+    "description": "Développement d'une plateforme de recrutement complète avec gestion des offres d'emploi, publication et module de candidature en ligne.",
+    "stack": [
+      "Laravel",
+      "MySQL"
+    ],
+    "thumb": "💼",
+    "github": "",
+    "live": "",
+    "featured": "true",
+    "client": "INSTAT",
+    "createdAt": "2025",
+    "images": []
+  },
+  {
+    "id": 2,
+    "title": "Gestion de communauté",
+    "description": "Application de gestion de communauté avec système de membres, rôles et permissions, et module de publication et d'interaction.",
+    "stack": [
+      "React",
+      "Laravel",
+      "MySQL"
+    ],
+    "thumb": "👥",
+    "github": "",
+    "live": "",
+    "featured": "true",
+    "client": "IT-Gen",
+    "createdAt": "2025",
+    "images": []
+  },
+  {
+    "id": 3,
+    "title": "Quiz & Évaluation avec OpenAI",
+    "description": "Système de quiz et évaluation automatisé avec génération de questions via l'API OpenAI et correction automatique des résultats.",
+    "stack": [
+      "React",
+      "Node.js",
+      "OpenAI API"
+    ],
+    "thumb": "🤖",
+    "github": "",
+    "live": "",
+    "featured": true,
+    "client": "Projet académique",
+    "createdAt": "2025",
+    "images": []
+  },
+  {
+    "id": 4,
+    "title": "Gestion d'État Civil",
+    "description": "Système de gestion des actes d'état civil avec module de génération et d'archivage des documents administratifs.",
+    "stack": [
+      "React",
+      "Laravel",
+      "MySQL"
+    ],
+    "thumb": "🏛️",
+    "github": "",
+    "live": "",
+    "featured": false,
+    "client": "INSTAT",
+    "createdAt": "2024",
+    "images": []
+  },
+  {
+    "id": 5,
+    "title": "Gestion de Parking Réservé",
+    "description": "Système de gestion de parking avec suivi en temps réel de l'occupation et de la disponibilité des places.",
+    "stack": [
+      "React",
+      "Node.js",
+      "MongoDB"
+    ],
+    "thumb": "🅿️",
+    "github": "",
+    "live": "",
+    "featured": false,
+    "client": "Projet académique",
+    "createdAt": "2024",
+    "images": []
+  },
+  {
+    "id": 6,
+    "title": "Gestion des Stagiaires",
+    "description": "Application de suivi des stages avec système d'évaluation des performances des stagiaires et tableau de bord de reporting.",
+    "stack": [
+      "React",
+      "Node.js",
+      "PostgreSQL"
+    ],
+    "thumb": "🎓",
+    "github": "",
+    "live": "",
+    "featured": false,
+    "client": "Projet académique",
+    "createdAt": "2024",
+    "images": []
+  },
+  {
+    "id": 7,
+    "title": "Gestion des Textes Juridiques",
+    "description": "Système de recherche et consultation des textes juridiques en vigueur avec filtrage par catégorie, date ou mot-clé.",
+    "stack": [
+      "PHP",
+      "MySQL"
+    ],
+    "thumb": "⚖️",
+    "github": "",
+    "live": "",
+    "featured": false,
+    "client": "APMF",
+    "createdAt": "2023",
+    "images": []
+  },
+  {
+    "id": 8,
+    "title": "Réservation de Docteur en Ligne",
+    "description": "Plateforme de réservation médicale en ligne avec gestion des disponibilités des médecins et système de planning.",
+    "stack": [
+      "PHP",
+      "MySQL"
+    ],
+    "thumb": "🏥",
+    "github": "",
+    "live": "",
+    "featured": false,
+    "client": "Softlab",
+    "createdAt": "2023",
+    "images": []
+  }
+]

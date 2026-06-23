@@ -1,0 +1,60 @@
+[
+  {
+    "id": 1,
+    "poste": "Stagiaire Développeur Fullstack",
+    "entreprise": "INSTAT",
+    "lieu": "Fianarantsoa, Madagascar",
+    "dateDebut": "2024-09",
+    "dateFin": "2024-12",
+    "enCours": false,
+    "description": "Développement d'un système de gestion des actes d'état civil. Mise en place d'un module de génération et d'archivage des documents administratifs.",
+    "competences": [
+      "React",
+      "Laravel",
+      "MySQL"
+    ]
+  },
+  {
+    "id": 2,
+    "poste": "Stagiaire Développeur Web",
+    "entreprise": "APMF",
+    "lieu": "Fianarantsoa, Madagascar",
+    "dateDebut": "2023-09",
+    "dateFin": "2023-12",
+    "enCours": false,
+    "description": "Développement d'un système de gestion des textes juridiques en vigueur. Mise en place d'un système de recherche et consultation par catégorie, date ou mot-clé.",
+    "competences": [
+      "PHP",
+      "MySQL"
+    ]
+  },
+  {
+    "id": 3,
+    "poste": "Développeur Fullstack",
+    "entreprise": "IT-Gen",
+    "lieu": "Fianarantsoa, Madagascar",
+    "dateDebut": "2025-02",
+    "dateFin": "2025-04",
+    "enCours": false,
+    "description": "Développement d'une plateforme de gestion de communauté avec système de membres, rôles et permissions, et module de publication et d'interaction.",
+    "competences": [
+      "React",
+      "Laravel",
+      "MySQL"
+    ]
+  },
+  {
+    "id": 4,
+    "poste": "Développeur Fullstack",
+    "entreprise": "INSTAT",
+    "lieu": "Fianarantsoa, Madagascar",
+    "dateDebut": "2025-06",
+    "dateFin": "2025-10",
+    "enCours": false,
+    "description": "Développement d'une plateforme de recrutement avec gestion des offres d'emploi et module de candidature en ligne.",
+    "competences": [
+      "Laravel",
+      "MySQL"
+    ]
+  }
+]
