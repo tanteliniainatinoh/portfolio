@@ -21,7 +21,7 @@ app.use(cors({
       'http://localhost:5501',
       'http://127.0.0.1:5500',
       'http://127.0.0.1:5501',
-      'https://tanteliniainatix.vercel.app'
+      'https://tanteliniainatinoh.vercel.app'
     ];
     if (!origin || allowed.includes(origin)) {
       callback(null, true);

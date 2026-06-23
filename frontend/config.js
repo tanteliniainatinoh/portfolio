@@ -1,1 +1,0 @@
-const API_URL = "https://portfolio-production-2a3c.up.railway.app";
